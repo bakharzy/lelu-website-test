@@ -63,6 +63,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: Website
     needs: preview
+    outputs: 
+      appServiceAppHostName: ${{ steps.deploy.outputs.appServiceAppHostName }}
     steps:
     - uses: actions/checkout@v3
     - uses: azure/login@v1
@@ -72,6 +74,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - uses: azure/arm-deploy@v1
+      id: deploy
       name: Deploy website
       with:
         failOnStdErr: false
